@@ -4,6 +4,7 @@ Package Homepage: https://cran.r-project.org/web/packages/beam/index.html
 
 [![](https://cranlogs.r-pkg.org/badges/beam)](https://cran.r-project.org/package=beam)
 [![Travis build status](https://travis-ci.org/gleday/beam.svg?branch=master)](https://travis-ci.org/gleday/beam)
+[![Coverage status](https://codecov.io/gh/gleday/beam/branch/master/graph/badge.svg)](https://codecov.io/github/gleday/beam?branch=master)
 
 # beam
 
