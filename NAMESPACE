@@ -1,0 +1,13 @@
+importFrom("grDevices", "colorRampPalette")
+importFrom("graphics", "abline", "box", "image", "par", "plot")
+importFrom("methods", "new", "show")
+importFrom("stats", "cov2cor", "optim", "pbeta", "p.adjust", "quantile")
+importFrom("fdrtool", "hc.thresh")
+importFrom("igraph", "graph.adjacency", "set.vertex.attribute", "cluster_louvain", "membership", "modularity")
+importFrom("Matrix", "sparseMatrix")
+importFrom("utils", "tail")
+importFrom("knitr", "kable")
+
+export(beam, beam.select)
+exportClasses(beam, beam.select)
+exportMethods("marg", "cond", "mcor", "pcor", "plotML", "plotCor", "plotAdj", "print", "show", "summary", "ugraph", "bgraph")
