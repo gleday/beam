@@ -3,6 +3,7 @@ This is a read-only mirror of the CRAN R package repository beam (Fast Bayesian 
 Package Homepage: https://cran.r-project.org/web/packages/beam/index.html
 
 [![](https://cranlogs.r-pkg.org/badges/beam)](https://cran.r-project.org/package=beam)
+[![Travis build status](https://travis-ci.org/gleday/beam.svg?branch=master)](https://travis-ci.org/gleday/beam)
 
 # beam
 
