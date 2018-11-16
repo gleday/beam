@@ -17,4 +17,5 @@ Repository: CRAN
 Packaged: 2018-02-14 15:27:24 UTC; gwenael
 RoxygenNote: 6.0.1
 Suggests: 
-    covr
+    covr,
+    testthat
