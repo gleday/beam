@@ -76,9 +76,6 @@ test_that("output", {
   # Test plotML
   expect_identical(plotML(fit), box())
   
-  # Test plotML
-  expect_identical(plotML(fit), box())
-  
   # Test plotCor
   expect_identical(plotCor(fit, type="both", order = "original", by = 'marginal'), box())
   expect_identical(plotCor(fit, type="both", order = "clust", by = 'marginal'), box())
@@ -128,6 +125,24 @@ test_that("output", {
   
   # show
   expect_output(show(sel))
+  
+  # Test plotML
+  expect_identical(plotML(sel), box())
+  
+  # Test plotAdj
+  expect_identical(plotAdj(sel, type="both", order = "original"), box())
+  expect_identical(plotAdj(sel, type="both", order = "clust"), box())
+  expect_identical(plotAdj(sel, type="marginal", order = "original"), box())
+  expect_identical(plotAdj(sel, type="marginal", order = "clust"), box())
+  expect_identical(plotAdj(sel, type="conditional", order = "original"), box())
+  expect_identical(plotAdj(sel, type="conditional", order = "clust"), box())
+  
+  # bgraph
+  expect_equal(class(bgraph(sel)), "igraph")
+  
+  # ugraph
+  expect_equal(class(ugraph(sel)), "igraph")
+  
   
   ## beam selection
   sel <- beam.select(fit, thres=0.01, method = "HC") 
