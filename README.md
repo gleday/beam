@@ -1,7 +1,3 @@
-This is a read-only mirror of the CRAN R package repository beam (Fast Bayesian Inference in Large Gaussian Graphical Models). 
-
-Package Homepage: https://cran.r-project.org/web/packages/beam/index.html
-
 [![](https://cranlogs.r-pkg.org/badges/beam)](https://cran.r-project.org/package=beam)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/beam)](https://cran.r-project.org/package=beam)
 [![Travis build status](https://travis-ci.org/gleday/beam.svg?branch=master)](https://travis-ci.org/gleday/beam)
