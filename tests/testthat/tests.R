@@ -73,6 +73,21 @@ test_that("output", {
   # Test cond
   expect_equal(is.data.frame(cond(fit)), TRUE)
   
+  # Test plotML
+  expect_identical(plotML(fit), box())
+  
+  # Test plotML
+  expect_identical(plotML(fit), box())
+  
+  # Test plotCor
+  expect_identical(plotCor(fit, type="both", order = "original", by = 'marginal'), box())
+  expect_identical(plotCor(fit, type="both", order = "clust", by = 'marginal'), box())
+  expect_identical(plotCor(fit, type="both", order = "clust", by = 'conditional'), box())
+  expect_identical(plotCor(fit, type="marginal", order = "original", by = 'marginal'), box())
+  expect_identical(plotCor(fit, type="marginal", order = "clust", by = 'marginal'), box())
+  expect_identical(plotCor(fit, type="conditional", order = "original", by = 'conditional'), box())
+  expect_identical(plotCor(fit, type="conditional", order = "clust", by = 'conditional'), box())
+  
   ##################################################
   ## beam selection
   sel <- beam.select(fit, thres=0.01, method = "BH") 
