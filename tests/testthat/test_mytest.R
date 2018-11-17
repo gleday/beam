@@ -58,6 +58,15 @@ test_that("output", {
   # ugraph
   expect_equal(class(ugraph(fit)), "igraph")
   
+  # summary
+  expect_output(summary(fit))
+  
+  # print
+  expect_output(print(fit))
+  
+  # show
+  expect_output(show(fit))
+  
   ##################################################
   ## beam selection
   sel <- beam.select(fit, thres=0.01, method = "BH") 
@@ -77,6 +86,7 @@ test_that("output", {
   # Test thres
   expect_equal(sel@thres, 0.01)
   
+  ## Test accessors beam.select-class object
   # Test marg
   expect_equal(is.data.frame(marg(sel)), TRUE)
   
@@ -88,6 +98,15 @@ test_that("output", {
   
   # Test pcor
   expect_equal(dim(pcor(sel)), c(189, 189))
+  
+  # summary
+  expect_output(summary(sel))
+  
+  # print
+  expect_output(print(sel))
+  
+  # show
+  expect_output(show(sel))
   
   ## beam selection
   sel <- beam.select(fit, thres=0.01, method = "HC") 
