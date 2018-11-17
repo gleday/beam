@@ -4,13 +4,10 @@ data("TCPAprad")
 
 test_that("output", {
 
+  ##################################################
   ## beam estimation
   fit <- beam(X = TCPAprad, type="both", verbose=FALSE)
 
-  ## beam selection
-  # beam selection
-  sel <- beam.select(fit, thres=0.01, method = "BH") 
-  
   ## Test beam-class object
   # Test table
   expect_equal(dim(fit@table), c(17766, 6))
@@ -61,7 +58,9 @@ test_that("output", {
   # ugraph
   expect_equal(class(ugraph(fit)), "igraph")
   
-  
+  ##################################################
+  ## beam selection
+  sel <- beam.select(fit, thres=0.01, method = "BH") 
   
   ## Test beam.select-class object
   # Test marginal
@@ -78,6 +77,34 @@ test_that("output", {
   # Test thres
   expect_equal(sel@thres, 0.01)
   
+  # Test marg
+  expect_equal(is.data.frame(marg(sel)), TRUE)
   
+  # Test cond
+  expect_equal(is.data.frame(cond(sel)), TRUE)
+  
+  # Test mcor
+  expect_equal(dim(mcor(sel)), c(189, 189))
+  
+  # Test pcor
+  expect_equal(dim(pcor(sel)), c(189, 189))
+  
+  ## beam selection
+  sel <- beam.select(fit, thres=0.01, method = "HC") 
+  
+  # Test method
+  expect_equal(sel@method, "HC")
+  
+  # Test marg
+  expect_equal(is.data.frame(marg(sel)), TRUE)
+  
+  # Test cond
+  expect_equal(is.data.frame(cond(sel)), TRUE)
+  
+  # Test mcor
+  expect_equal(dim(mcor(sel)), c(189, 189))
+  
+  # Test pcor
+  expect_equal(dim(pcor(sel)), c(189, 189))
   
 })
