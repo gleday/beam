@@ -55,6 +55,14 @@ test_that("output", {
   # mcor
   expect_equal(dim(pcor(fit)), c(189, 189))
   
+  # bgraph
+  expect_equal(class(bgraph(fit)), "igraph")
+  
+  # ugraph
+  expect_equal(class(ugraph(fit)), "igraph")
+  
+  
+  
   ## Test beam.select-class object
   # Test marginal
   expect_equal(dim(sel@marginal), c(6101, 4))
@@ -69,5 +77,7 @@ test_that("output", {
   
   # Test thres
   expect_equal(sel@thres, 0.01)
+  
+  
   
 })

@@ -21,6 +21,9 @@ Fast Bayesian inference of marginal and conditional independence structures betw
 If you wish to install **beam** from R:
 
 ```R
-install.packages("beam")
+install.packages("devtools")
+library(devtools)
+install_github("gleday/beam")
 library(beam)
 ```
+
