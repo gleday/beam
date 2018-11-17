@@ -67,6 +67,23 @@ test_that("output", {
   # show
   expect_output(show(fit))
   
+  # Test marg
+  expect_equal(is.data.frame(marg(fit)), TRUE)
+  
+  # Test cond
+  expect_equal(is.data.frame(cond(fit)), TRUE)
+  
+  # Test plotML
+  expect_output(plotML(fit))
+  
+  # test plotCor
+  expect_output(plotCor(fit, type="both", order="original", by="marginal"))
+  expect_output(plotCor(fit, type="both", order="original", by="conditonal"))
+  expect_output(plotCor(fit, type="marginal", order="original", by="marginal"))
+  expect_output(plotCor(fit, type="marginal", order="clust", by="marginal"))
+  expect_output(plotCor(fit, type="conditonal", order="original", by="conditonal"))
+  expect_output(plotCor(fit, type="conditonal", order="clust", by="conditonal"))
+  
   ##################################################
   ## beam selection
   sel <- beam.select(fit, thres=0.01, method = "BH") 
