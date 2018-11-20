@@ -170,18 +170,18 @@ test_that("NlowerthanP", {
   
   ##################################################
   ## beam estimation
-  fit <- beam(X = t(TCPAprad), type="both", verbose=TRUE)
+  fit <- beam(X = t(TCPAprad), type="both", verbose=TRUE, shrinkageMethod="cpo")
   
   ## Test beam-class object
   # Test table
   expect_equal(dim(fit@table), c(13366, 6))
   expect_equal(colnames(fit@table), c("m_cor", "m_logBF", "m_tail_prob", "p_cor", "p_logBF", "p_tail_prob"))
-  expect_equal(fit@table[1,1], 0.4994693, tolerance=1e-5)
-  expect_equal(fit@table[1,2], 26.13615, tolerance=1e-5)
+  expect_equal(fit@table[1,1], 0.4816744, tolerance=1e-5)
+  expect_equal(fit@table[1,2], 25.22071, tolerance=1e-5)
   expect_equal(fit@table[1,3], 7.699685e-16, tolerance=1e-5)
-  expect_equal(fit@table[1,4], 0.1178105, tolerance=1e-5)
-  expect_equal(fit@table[1,5], 1.506616, tolerance=1e-5)
-  expect_equal(fit@table[1,6], 0.0001768815, tolerance=1e-5)
+  expect_equal(fit@table[1,4], 0.1122125, tolerance=1e-5)
+  expect_equal(fit@table[1,5], 1.344626, tolerance=1e-5)
+  expect_equal(fit@table[1,6], 5.837648e-05, tolerance=1e-5)
   
   # Test deltaOpt
   expect_equal(length(fit@deltaOpt), 1)
@@ -259,7 +259,7 @@ test_that("NlowerthanP", {
   expect_equal(colnames(sel@marginal), c("m_cor", "m_logBF", "m_tail_prob", "m_tail_prob_BY"))
   
   # Test conditional
-  expect_equal(dim(sel@conditional), c(54, 4))
+  expect_equal(dim(sel@conditional), c(63, 4))
   expect_equal(colnames(sel@conditional), c("p_cor", "p_logBF", "p_tail_prob", "p_tail_prob_BY"))
   
   # Test method

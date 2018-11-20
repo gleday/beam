@@ -5,8 +5,10 @@
 #' @param method character. Method to use for multiple comparison adjustment of tail probabilities.
 #' @param return.only character. Quantities to be returned.
 #'
-#' @details
+#' @description 
+#' Infer graphical structures by multiple testing
 #'
+#' @details
 #' The argument \code{method} allows to adjust the tail probabilities obtained from the null distributions of
 #' the Bayes factors for multiple comparisons. Possible choices are: "holm", "bonferroni", "BH", "BY" and "HC".
 #' Apart from "HC", these are passed onto the R function \code{p.adjust}
@@ -24,7 +26,11 @@
 #'
 #' @author Gwenael G.R. Leday and Ilaria Speranza
 #'
-#' @references Leday, G.G.R. and Richardson, S. (2018). Fast Bayesian inference in large Gaussian graphical models. Submitted.
+#' @references
+#' Drton, M., & Perlman, M. D. (2007). Multiple testing and error control in Gaussian graphical model selection. Statistical Science, 430-449.\cr
+#' Goeman, J. J., & Solari, A. (2014). Multiple hypothesis testing in genomics. Statistics in medicine, 33(11), 1946-1978.\cr
+#' Donoho, D., & Jin, J. (2015). Higher criticism for large-scale inference, especially for rare and weak effects. Statistical Science, 30(1), 1-25.\cr
+#' Klaus, B., & Strimmer, K. (2012). Signal identification for rare and weak features: higher criticism or false discovery rates?. Biostatistics, 14(1), 129-143.
 #'
 #' @export
 beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(object@return.only,'adj')){
