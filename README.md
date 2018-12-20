@@ -7,7 +7,7 @@
 
 This R package implements the method described in
 
-Leday, G. G. and Richardson, S. (2018). [Fast Bayesian inference in large Gaussian graphical models](https://arxiv.org/abs/1803.08155). arXiv:1803.08155
+Leday, G.G.R. and Richardson, S. (2018). [Fast Bayesian inference in large Gaussian graphical models](https://arxiv.org/abs/1803.08155). arXiv:1803.08155
 
 ## Description
 
@@ -18,9 +18,14 @@ Fast Bayesian inference of marginal and conditional independence structures betw
 If you wish to install **beam** from R:
 
 ```R
+# Install/load R package devtools
 install.packages("devtools")
 library(devtools)
+
+# Install/load R package beam from github
 install_github("gleday/beam")
 library(beam)
 ```
 
+Note that **beam** is maintained on github and only updated on CRAN every so often.
+Therefore, software versions may differ.
