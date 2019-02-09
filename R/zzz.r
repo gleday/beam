@@ -4,14 +4,7 @@
 
 .lpvarGamma <- function(z, p){# functions written by Harry Gray
   position = 1:p
-  if (length(z) == 1){
-    ans <- ((p * (p-1))/4) * log(pi) + (sum(lgamma(z + (1-position)/2)))
-  }else{
-    ans <- rep(0, length(z))
-    for (i in 1:length(z)){
-      ans[i] <- ((p * (p-1))/4) * log(pi) + (sum(lgamma(z[i] + (1-position)/2)))
-    }
-  }
+  ans <- ((p * (p-1))/4) * log(pi) + (sum(lgamma(z + (1-position)/2)))
   return(ans)
 }
 
