@@ -7,7 +7,7 @@
 
 This R package implements the method described in
 
-Leday, G.G.R. and Richardson, S. (2018). [Fast Bayesian inference in large Gaussian graphical models](https://arxiv.org/abs/1803.08155). arXiv:1803.08155
+Leday, G.G.R. and Richardson, S. (2019). [Fast Bayesian inference in large Gaussian graphical models](https://doi.org/10.1111/biom.13064). *Biometrics (in press)*.
 
 ## Description
 
