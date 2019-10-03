@@ -66,30 +66,6 @@ double logML(const double delta, const int p, const int n, colvec eigs, const do
   return(out);
 }
 
-double logCPO(const double delta, const int p, const int n, mat X, colvec eigs, mat XXT, mat S, mat D, const double logdetD){
-  double out = -0.5*p*log(datum::pi);
-  out += lpvarGamma((delta+n)*0.5, p);
-  out -= lpvarGamma((delta+n-1)*0.5, p);
-  out -= 0.5*sum(log((delta-p-1)+eigs));
-  mat TinvDelta;
-  if(logdetD!=0){
-    out -= 0.5*logdetD;
-    TinvDelta = inv_sympd((delta-p-1)*D + S);
-  }else{
-    if(n>=p){
-      TinvDelta = inv_sympd((delta-p-1)*eye(p, p) + S);
-    }else{
-      TinvDelta = inv_sympd(eye(n, n) + (1/(delta-p-1))*XXT);
-      TinvDelta = X.t()*TinvDelta;
-      TinvDelta = TinvDelta/std::pow(delta-p-1, 2);
-      TinvDelta = TinvDelta*X;
-      TinvDelta = (1/(delta-p-1))*eye(p, p) - TinvDelta;
-    }
-  }
-  out += 0.5*(delta+n-1)*sum(log(ones(n)-diagvec(X*TinvDelta*X.t())));
-  return(out);
-}
-
 double getDeltaOpt(const int n, const int p, colvec eigs, const double logdetD){
   const double lowerVal = alphaToDelta(0.001, n, p);
   const double upperVal = alphaToDelta(0.999, n, p);

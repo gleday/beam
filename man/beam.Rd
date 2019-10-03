@@ -5,7 +5,7 @@
 
 \usage{
 beam(X, type = "conditional", return.only = c("cor", "BF", "prob"),
-verbose=TRUE, shrinkageMethod="ml", D=NULL)
+verbose=TRUE, D=NULL)
 }
 
 \arguments{
@@ -13,7 +13,6 @@ verbose=TRUE, shrinkageMethod="ml", D=NULL)
   \item{type}{character. Either "marginal", "conditional" or "both". See Details.}
   \item{return.only}{character. Either "cor", "BF", "prob". See details.}
   \item{verbose}{logical. Whether information on progress should be be printed.}
-  \item{shrinkageMethod}{character. Either "ml" (marginal likelihood) or "cpo" (conditional predictive ordinate).}
   \item{D}{matrix. Prior marginal correlation matrix. Must be positive definite, well-conditioned and have unit variance.}
 }
 
@@ -22,7 +21,7 @@ An object of class \code{\link{beam-class}}
 }
 
 \description{
-This function carries out covariance and inverse covariance estimation within the Gaussian conjugate model. The scale matrix parameter of the inverse-Wishart is set to the identity (default), whereas the degree of freedom parameter is estimated by maximization of the marginal likelihood (\code{shrinkageMethod = "ml"}) or conditional predictive ordinate (\code{shrinkageMethod = "cpo"}). The function also computes the Bayes factor and tail probability (p-values) to test the marginal or conditional independence between all pairs of variables.
+This function carries out covariance and inverse covariance estimation within the Gaussian conjugate model. The scale matrix parameter of the inverse-Wishart is set to the identity (default), whereas the degree of freedom parameter is estimated by maximization of the marginal likelihood. The function also computes the Bayes factor and tail probability (p-values) to test the marginal or conditional independence between all pairs of variables.
 }
 
 \details{

@@ -4,14 +4,12 @@
 #' @param type character. Either "marginal", "conditional" or "both". See Details.
 #' @param return.only character. Either "cor", "BF", "prob". See details.
 #' @param verbose logical. Whether information on progress should be be printed.
-#' @param shrinkageMethod character. Either "ml" (marginal likelihood) or "cpo" (conditional predictive ordinate).
 #' @param D matrix. Prior marginal correlation matrix. Must be positive definite, well-conditioned and have unit variance.
 #'
 #' @description 
 #' This function carries out covariance and inverse-covariance estimation within the Gaussian conjugate model.
 #' The scale matrix parameter of the inverse-Wishart is, by default, set to the identity, whereas the
-#' degree of freedom parameter is estimated by maximization of the marginal likelihood (\code{shrinkageMethod = "ml"})
-#' or conditional predictive ordinate (\code{shrinkageMethod = "cpo"}).
+#' degree of freedom parameter is estimated by maximization of the marginal likelihood.
 #' The function also computes Bayes factors and tail probabilities (p-values) to recover the marginal and/or
 #' conditional independence structure between variables.
 #'
@@ -54,7 +52,7 @@
 #' 
 #' @export
 
-beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), verbose=TRUE, shrinkageMethod="ml", D=NULL){
+beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), verbose=TRUE, D=NULL){
 
 	time0 <- proc.time()
 
@@ -125,17 +123,6 @@ beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), 
 		}
 	}else{
 		D <- matrix(0, ncol(X), ncol(X))
-	}
-	if(is.character(shrinkageMethod)){
-		if(length(shrinkageMethod)!=1){
-			stop("shrinkageMethod must be of length 1")
-		}else{
-			if(!shrinkageMethod%in%c("ml", "cpo")){
-				stop("shrinkageMethod must equal 'ml' or 'cpo' ")
-			}
-		}
-	}else{
-		stop("shrinkageMethod must be a character")
 	}
 
 	#########################
