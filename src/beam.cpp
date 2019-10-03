@@ -49,17 +49,17 @@ double deltaToAlpha(double delta, int n, int p){
 double lpvarGamma(const double x, const int p) {
   double ans = (p * (p - 1) * 0.25) * log(datum::pi);
   for(int j = 1; j < (p + 1); ++j){
-    ans += lgamma(x - ((j - 1.0) * 0.5));
+    ans += std::lgamma(x - ((j - 1.0) * 0.5));
   }
   return ans;
 }
 
 double logML(const double delta, const int p, const int n, colvec eigs, const double logdetD){
-  double out = -0.5*n*p*log(datum::pi);
+  double out = -0.5*n*p*std::log(datum::pi);
   out += lpvarGamma((delta+n)*0.5, p);
   out -= lpvarGamma(delta*0.5, p);
-  out += 0.5*delta*p*log(delta-p-1);
-  out -= 0.5*(delta+n)*sum(log((delta-p-1)+eigs));
+  out += 0.5*delta*p*std::log(delta-p-1);
+  out -= 0.5*(delta+n)*sum(arma::log((delta-p-1)+eigs));
   if(logdetD!=0){
     out -= 0.5*n*logdetD;
   }
@@ -96,6 +96,7 @@ double getDeltaOpt(const int n, const int p, colvec eigs, const double logdetD){
   const auto obj = [p, n, eigs, logdetD](double x) { return -logML(x, p, n, eigs, logdetD); };
   boost::uintmax_t it = 1000;
   const auto result = brent_find_minima(obj, lowerVal, upperVal, 1000, it);
+  //std::pair<double, double> result = brent_find_minima(obj, lowerVal, upperVal, 1000, it);
   auto deltaOpt = 0.0, valOpt = 0.0;
   std::tie(deltaOpt, valOpt) = result;
   return(deltaOpt);
@@ -156,12 +157,12 @@ arma::colvec getTails(arma::colvec q, const double s1, const double s2){
 }
 
 arma::colvec get_p_BF(arma::colvec rqij, arma::colvec rgij, const double delta, const int n){
-  double k1 = lgamma((delta+n)/2);
-  k1 -= lgamma(delta/2);
-  k1 += lgamma((delta+n-1)/2);
-  k1 -= lgamma((delta-1)/2);
-  k1 += 2*lgamma((delta+1)/2);
-  k1 -= 2*lgamma((delta+n+1)/2);
+  double k1 = std::lgamma((delta+n)/2);
+  k1 -= std::lgamma(delta/2);
+  k1 += std::lgamma((delta+n-1)/2);
+  k1 -= std::lgamma((delta-1)/2);
+  k1 += 2*std::lgamma((delta+1)/2);
+  k1 -= 2*std::lgamma((delta+n+1)/2);
   colvec logBF = ones(size(rqij));
   logBF -= square(rqij);
   logBF = log(logBF);
@@ -176,8 +177,8 @@ arma::colvec get_p_BF(arma::colvec rqij, arma::colvec rgij, const double delta, 
 arma::colvec get_m_BF(arma::colvec rtij, arma::colvec rfij, const double delta, const int n, const int p){
   double k2 = lpvarGamma((delta+n-p+2)/2, 2);
   k2 -= lpvarGamma((delta-p+2)/2, 2);
-  k2 += 2*lgamma((delta-p+3)/2);
-  k2 -= 2*lgamma((delta+n-p+3)/2);
+  k2 += 2*std::lgamma((delta-p+3)/2);
+  k2 -= 2*std::lgamma((delta+n-p+3)/2);
   arma::colvec logBF = ones(size(rtij));
   logBF -= square(rtij);
   logBF = log(logBF);
