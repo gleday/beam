@@ -57,7 +57,7 @@ Maintainer: Gwenael G.R. Leday <gwenael.leday@mrc-bsu.cam.ac.uk>
 }
 
 \references{
-Leday, G.G.R. and Richardson, S. (2018). Fast Bayesian inference in large Gaussian graphical models. <arXiv:1803.08155>.
+Leday, G.G.R. and Richardson, S. (2019). Fast Bayesian inference in large Gaussian graphical models. \emph{Biometrics}.
 }
 
 \keyword{marginal independence, conditional independence, Bayes factors, tail probabilities, multiple testing, high dimensional data.}

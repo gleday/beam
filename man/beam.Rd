@@ -31,7 +31,7 @@ Using argument \code{type} the user may indicate whether the marginal dependenci
 }
 
 \references{
-Leday, G.G.R. and Richardson, S. (2018). Fast Bayesian inference in large Gaussian graphical models. <arXiv:1803.08155>.
+Leday, G.G.R. and Richardson, S. (2019). Fast Bayesian inference in large Gaussian graphical models. \emph{Biometrics}.
 }
 
 \author{

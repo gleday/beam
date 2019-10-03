@@ -44,13 +44,13 @@ setMethod(
       cat("+ SUMMARY MARGINAL DEPENDENCIES")
       smry <- NULL
       if("m_cor" %in% labs){
-        smry <- rbind(smry, format(round(quantile(object@table$m_cor, probs=c(0,0.5,1)), 3), nsmall=3))
+        smry <- rbind(smry, format(round(quantile(object@table[,"m_cor"], probs=c(0,0.5,1)), 3), nsmall=3))
       }
       if("m_logBF" %in% labs){
-        smry <- rbind(smry, format(round(quantile(object@table$m_logBF, probs=c(0,0.5,1)), 3), nsmall=3))
+        smry <- rbind(smry, format(round(quantile(object@table[,"m_logBF"], probs=c(0,0.5,1)), 3), nsmall=3))
       }
       if("m_tail_prob" %in% labs){
-        smry <- rbind(smry, format(quantile(object@table$m_tail_prob, probs=c(0,0.5,1)), digits=3))
+        smry <- rbind(smry, format(quantile(object@table[,"m_tail_prob"], probs=c(0,0.5,1)), digits=3))
       }
       rownames(smry) <- c(" marginal correlations ", " log(Bayes factors)", "tail probabilities")[c("m_cor", "m_logBF", "m_tail_prob")%in%labs]
       colnames(smry) <- c("Min.", "Median", "Max.")
@@ -61,13 +61,13 @@ setMethod(
       cat("+ SUMMARY CONDITIONAL DEPENDENCIES")
       smry <- NULL
       if("p_cor"%in%labs){
-        smry <- rbind(smry, format(round(quantile(object@table$p_cor, probs=c(0,0.5,1)), 3), nsmall=3))
+        smry <- rbind(smry, format(round(quantile(object@table[,"p_cor"], probs=c(0,0.5,1)), 3), nsmall=3))
       }
       if("p_logBF"%in%labs){
-        smry <- rbind(smry, format(round(quantile(object@table$p_logBF, probs=c(0,0.5,1)), 3), nsmall=3))
+        smry <- rbind(smry, format(round(quantile(object@table[,"p_logBF"], probs=c(0,0.5,1)), 3), nsmall=3))
       }
       if("p_tail_prob"%in%labs){
-        smry <- rbind(smry, format(quantile(object@table$p_tail_prob, probs=c(0,0.5,1)), digits=3))
+        smry <- rbind(smry, format(quantile(object@table[,"p_tail_prob"], probs=c(0,0.5,1)), digits=3))
       }
       rownames(smry) <- c(" partial correlations ", " log(Bayes factors)", "tail probabilities")[c("p_cor", "p_logBF", "p_tail_prob")%in%labs]
       colnames(smry) <- c("Min.", "Median", "Max.")
@@ -93,8 +93,9 @@ setMethod(
     rowcol <- data.frame(row = matidxs[,1], col = matidxs[,2])
     df <- object@table
     marg_cols <- c('m_cor','m_logBF','m_tail_prob')
-
-    return(cbind(rowcol,df[intersect(marg_cols, colnames(df))]))
+    df <- df[, intersect(marg_cols, colnames(df))]
+    
+    return(cbind(rowcol,df))
   }
 )
 
@@ -113,7 +114,9 @@ setMethod(
     matidxs <- .upperTriIdxs(object@dimX[2])
     rowcol <- data.frame(row = matidxs[,1], col = matidxs[,2])
     cond_cols <- c('p_cor','p_logBF','p_tail_prob')
-    return(cbind(rowcol,df[intersect(cond_cols, colnames(df))]))
+    df <- df[,intersect(cond_cols, colnames(df))]
+    
+    return(cbind(rowcol,df))
   }
 )
 
@@ -128,7 +131,7 @@ setMethod(
     p <- object@dimX[2]
     idxs <- .upperTriIdxs(p)
     if('m_cor' %in% colnames(df)){
-      matcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs[,1],idxs[,2]), j=c(idxs[,2],idxs[,1]), x=rep(df$m_cor,2), dims=c(p,p)))
+      matcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs[,1],idxs[,2]), j=c(idxs[,2],idxs[,1]), x=rep(df[,"m_cor"],2), dims=c(p,p)))
       diag(matcor) <- 1
       return(matcor)
     }else{
@@ -148,7 +151,7 @@ setMethod(
     p <- object@dimX[2]
     idxs <- .upperTriIdxs(p)
     if('p_cor' %in% colnames(df)){
-      matpcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs[,1],idxs[,2]), j=c(idxs[,2],idxs[,1]), x=rep(df$p_cor,2), dims=c(p, p)))
+      matpcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs[,1],idxs[,2]), j=c(idxs[,2],idxs[,1]), x=rep(df[, "p_cor"],2), dims=c(p, p)))
       diag(matpcor) <- 1
       return(matpcor)
     }else{
@@ -164,7 +167,7 @@ setMethod(
   f = "plotML",
   signature = "beam",
   definition = function(object, ...){
-    plot(object@gridAlpha[,2], object@gridAlpha[,3], type="l", xlab=expression(alpha), ylab="log-marginal likelihood")
+    plot(object@gridAlpha[,2], object@gridAlpha[,3], type="l", xlab=expression(alpha), ylab="log-marginal likelihood", lwd=2, ...)
     abline(v=object@alphaOpt, col="black", lty=2)
     abline(h=object@valOpt, col="black", lty=2)
   }
@@ -280,9 +283,9 @@ setMethod(
         
         # Plot
         par(mar=c(2, 2, 2, 2) + 0.1)
-        image(1:nrow(themat), 1:ncol(themat), mirror(themat), zlim=c(-1,1), col=rg, xlab="", ylab="", main="", xaxt="n", yaxt="n")
-        #image(1:nrow(themat), 1:ncol(themat), mirror(themat), zlim=c(min(themat, na.rm=TRUE), max(themat, na.rm=TRUE)), col=rg, xlab="", ylab="", main="", xaxt="n", yaxt="n")
-        box()
+        #image(1:nrow(themat), 1:ncol(themat), mirror(themat), zlim=c(-1,1), col=rg, xlab="", ylab="", main="", xaxt="n", yaxt="n")
+        image(1:nrow(themat), 1:ncol(themat), mirror(themat), zlim=c(min(themat, na.rm=TRUE), max(themat, na.rm=TRUE)), col=rg, xlab="", ylab="", main="", xaxt="n", yaxt="n")
+        #box()
       }
     }
   }
@@ -299,7 +302,7 @@ setMethod(
       p <- object@dimX[2]
       idxs <- .upperTriIdxs(p)
       edges <- as.data.frame(idxs)
-      edges <- cbind(edges, abs(df$m_cor))
+      edges <- cbind(edges, abs(df[,"m_cor"]))
       colnames(edges) <- c('node1','node2','weight')
       myigraph <- igraph::graph_from_data_frame(d=edges, directed=FALSE)
       if(length(object@varlabs)>0){
@@ -323,7 +326,7 @@ setMethod(
       p <- object@dimX[2]
       idxs <- .upperTriIdxs(p)
       edges <- as.data.frame(idxs)
-      edges <- cbind(edges, abs(df$p_cor))
+      edges <- cbind(edges, abs(df[,"p_cor"]))
       colnames(edges) <- c('node1','node2','weight')
       myigraph <- igraph::graph_from_data_frame(d=edges, directed=FALSE)
       if(length(object@varlabs)>0){

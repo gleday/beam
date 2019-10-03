@@ -103,30 +103,31 @@ beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(obje
     }
 
     if('adj' %in% return.only){ # add a column for adjusted probabilities
-      tableM <- cbind(df[marg.cols], vector(mode = 'numeric', length = p*(p-1)/2))
+      tableM <- as.data.frame(df[, marg.cols])
+      tableM <- cbind(tableM, vector(mode = 'numeric', length = p*(p-1)/2))
       names(tableM)[length(names(tableM))] <- paste0("m_tail_prob_", ifelse(method == 'blfdr',
                                                                             substr(method, 1, 5),
                                                                             substr(method, 1, 4))) # modify last column name
     }else{
-      tableM <- df[marg.cols] # without comma to preserve the data.frame structure even if one single column is selected
+      tableM <- as.data.frame(df[, marg.cols])
     }
-
+print(class(tableM))
     if(!('m_tail_prob' %in% df.cols)){
       stop('Method ', method, ' requires tail probabilities, which are not currently included in the beam object')
     }
 
     if(method=="HC"){
 
-      HCthres <- hc.thresh(df$m_tail_prob, alpha0=1, plot=FALSE)
+      HCthres <- hc.thresh(df[,"m_tail_prob"], alpha0=1, plot=FALSE)
       if('adj' %in% return.only){
-        tableM <- tableM[df$m_tail_prob < HCthres, -ncol(tableM)]
+        tableM <- tableM[df[,"m_tail_prob"] < HCthres, -ncol(tableM)]
       }else{
-        tableM <- tableM[df$m_tail_prob < HCthres, , drop = FALSE ]
+        tableM <- tableM[df[,"m_tail_prob"] < HCthres, , drop = FALSE ]
       }
 
     }else{
 
-      tailAdj <- p.adjust(df$m_tail_prob, method=method)
+      tailAdj <- p.adjust(df[,"m_tail_prob"], method=method)
       if('adj' %in% return.only){
         tableM[, ncol(tableM)] <- tailAdj
       }
@@ -159,12 +160,13 @@ beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(obje
     }
 
     if('adj' %in% return.only){ # add a column for adjusted probabilities
-      tableC <- cbind(df[cond.cols], vector(mode = 'numeric', length = p*(p-1)/2))
+      tableC <- as.data.frame(df[, cond.cols])
+      tableC <- cbind(tableC, vector(mode = 'numeric', length = p*(p-1)/2))
       names(tableC)[length(names(tableC))] <- paste0("p_tail_prob_", ifelse(method == 'blfdr',
                                                                             substr(method, 1, 5),
                                                                             substr(method, 1, 4))) # modify last column name
     }else{
-      tableC <- df[cond.cols]
+      tableC <- as.data.frame(df[,cond.cols])
     }
 
     if(!('p_tail_prob' %in% df.cols)){
@@ -173,16 +175,16 @@ beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(obje
 
     if(method=="HC"){
 
-      HCthres <- hc.thresh(df$p_tail_prob, alpha0=1, plot=FALSE)
+      HCthres <- hc.thresh(df[,"p_tail_prob"], alpha0=1, plot=FALSE)
       if('adj' %in% return.only){  # put values in column if requested in output
-        tableC <- tableC[df$p_tail_prob < HCthres, -ncol(tableC)]
+        tableC <- tableC[df[,"p_tail_prob"] < HCthres, -ncol(tableC)]
       }else{
-        tableC <- tableC[df$p_tail_prob < HCthres,  , drop = FALSE]
+        tableC <- tableC[df[,"p_tail_prob"] < HCthres,  , drop = FALSE]
       }
 
     }else{
 
-      tailAdj <- p.adjust(df$p_tail_prob, method=method)
+      tailAdj <- p.adjust(df[,"p_tail_prob"], method=method)
       if('adj' %in% return.only){  # put values in column if requested in output
         tableC[, ncol(tableC)] <- tailAdj
       }
@@ -191,7 +193,7 @@ beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(obje
     }
 
   }
-
+  print(class(tableM))
   #########################
   #        OUTPUT         #
   #########################
