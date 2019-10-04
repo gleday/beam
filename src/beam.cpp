@@ -1,18 +1,21 @@
 //[[Rcpp::depends(RcppArmadillo)]]
 //[[Rcpp::depends(BH)]]
-#include <RcppArmadillo.h>
 #include <R.h>
-#include <Rcpp.h>
 #include <tuple>
 #include <boost/math/tools/minima.hpp>
 #include <boost/math/special_functions/beta.hpp>
+#undef NDEBUG
+#include <RcppArmadillo.h>
 
 using namespace arma;
 using namespace Rcpp;
 using boost::math::tools::brent_find_minima;
 using boost::math::ibetac;
 
+
+//////////////////////////////////////////////
 //----------- Internal functions -----------//
+//////////////////////////////////////////////
 
 arma::mat cov2cor(arma::mat c){
   colvec sds = 1/sqrt(c.diag());
@@ -132,6 +135,12 @@ arma::colvec getTails(arma::colvec q, const double s1, const double s2){
   return(q);
 }
 
+arma::sp_mat getTails2(arma::sp_mat q, const double s1, const double s2){
+  const auto fun = [s1, s2](double x) { return ibetac(s1, s2, x); };
+  q.transform(fun);
+  return(q);
+}
+
 arma::colvec get_p_BF(arma::colvec rqij, arma::colvec rgij, const double delta, const int n){
   double k1 = std::lgamma((delta+n)/2);
   k1 -= std::lgamma(delta/2);
@@ -167,7 +176,9 @@ arma::colvec get_m_BF(arma::colvec rtij, arma::colvec rfij, const double delta, 
 }
 
 
+//////////////////////////////////////////////
 //----------- External functions -----------//
+//////////////////////////////////////////////
 
 // [[Rcpp::export(".beam")]]
 Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, bool verbose = true){
@@ -186,7 +197,7 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
   }
   
   arma::mat Dinv, cholD;
-  double logdetD;
+  double logdetD = 0.0;
   bool isD = !all(D.diag()==0);
   if(isD){
     cholD = chol(D);
@@ -450,3 +461,105 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
   
   return out;
 }
+
+// [[Rcpp::export(".lightbeam")]]
+arma::sp_mat lightbeam(arma::mat X, const double thres, bool verbose = true){
+  
+  // Dimension data
+  const int n = X.n_rows;
+  const int p = X.n_cols;
+  
+  // Standardize data
+  standardize(&X);
+
+  if(verbose){
+    Rcpp::Rcout << "DONE" << std::endl;
+    Rcpp::Rcout << "--> compute eigenvalues and optimal shrinkage... ";
+  }
+  
+  arma::colvec eigs = zeros(p);
+  double deltaOpt;
+  double d;
+  arma::mat Tinv;
+  if(n >= p){
+    
+    // Compute eigenvalues
+    arma::mat XTX = X.t()*X;
+    eigs += sort(eig_sym(XTX), "descend");
+    
+    // Optimal shrinkage
+    deltaOpt = getDeltaOpt(n, p, eigs, 0);
+
+    // Posterior partial correlations
+    d = 1/(deltaOpt-p-1);
+    Tinv = inv_sympd((1/d)*eye(p, p) + XTX);
+    XTX.clear();
+    
+  }else{
+    
+    // Compute eigenvalues
+    arma::mat XXT = X*X.t();
+    eigs.subvec(0, n-1) += sort(eig_sym(XXT), "descend");
+    
+    // Optimal shrinkage
+    deltaOpt = getDeltaOpt(n, p, eigs, 0);
+
+    // Posterior partial correlations
+    d = 1/(deltaOpt-p-1);
+    Tinv = d*eye(p, p);
+    Tinv -= d*d*X.t()*inv_sympd(eye(n, n) + d*XXT)*X;
+    XXT.clear();
+    
+  }
+  X.clear();
+  eigs.clear();
+  
+  if(verbose){
+    Rcpp::Rcout << "DONE" << std::endl;
+    Rcpp::Rcout << "--> compute rzij2... ";
+  }
+  
+  // Compute rzij2
+  arma::mat den1 = - Tinv;
+  arma::mat rzij2 = den1;
+  den1 %= Tinv;
+  arma::mat ziizjj = Tinv.diag() * Tinv.diag().t();
+  den1 += ziizjj;
+  den1 = 1/den1;
+  ziizjj %= den1;
+  ziizjj %= den1;
+  ziizjj = ziizjj + 1/(d*d);
+  arma::mat tiifjj(size(Tinv), fill::zeros);
+  tiifjj.each_col() = Tinv.diag() * d;
+  tiifjj += tiifjj.t();
+  tiifjj %= den1;
+  tiifjj = tiifjj * (1/(d*d));
+  ziizjj -= tiifjj;
+  tiifjj.clear();
+  Tinv.clear();
+  rzij2 %= den1;
+  den1.clear();
+  rzij2 /= sqrt(ziizjj);
+  ziizjj.clear();
+  rzij2 %= rzij2;
+  
+  // Sparsify rzij2
+  rzij2.elem(find(rzij2 <= thres)).zeros();
+  
+  if(verbose){
+    Rcpp::Rcout << "DONE" << std::endl;
+    Rcpp::Rcout << "--> compute tail probabilities... ";
+  }
+  
+  // Compute tail/error probabilities
+  arma::sp_mat tails = sp_mat(trimatu(rzij2, 1));
+  rzij2.clear();
+  tails = getTails2(tails, 0.5, (n-1)*0.5);
+  
+  if(verbose){
+    Rcpp::Rcout << "DONE" << std::endl;
+  }
+  
+  return tails;
+}
+

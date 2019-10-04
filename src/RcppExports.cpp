@@ -21,9 +21,23 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// lightbeam
+arma::sp_mat lightbeam(arma::mat X, const double thres, bool verbose);
+RcppExport SEXP _beam_lightbeam(SEXP XSEXP, SEXP thresSEXP, SEXP verboseSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const double >::type thres(thresSEXP);
+    Rcpp::traits::input_parameter< bool >::type verbose(verboseSEXP);
+    rcpp_result_gen = Rcpp::wrap(lightbeam(X, thres, verbose));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_beam_beam", (DL_FUNC) &_beam_beam, 5},
+    {"_beam_lightbeam", (DL_FUNC) &_beam_lightbeam, 3},
     {NULL, NULL, 0}
 };
 

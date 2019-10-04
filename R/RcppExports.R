@@ -5,3 +5,7 @@
     .Call('_beam_beam', PACKAGE = 'beam', X, type, ronly, D, verbose)
 }
 
+.lightbeam <- function(X, thres, verbose = TRUE) {
+    .Call('_beam_lightbeam', PACKAGE = 'beam', X, thres, verbose)
+}
+
