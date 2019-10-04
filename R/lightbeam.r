@@ -48,7 +48,7 @@ lightbeam <- function(X, thres = 0.1, method = "holm", verbose=TRUE){
   if(!is.null(colnames(X))){
     varlabs <- colnames(X)
   }else{
-    varlabs <- character()
+    varlabs <- paste0("V", 1:ncol(X))
   }
   
   # Check input argument thres
