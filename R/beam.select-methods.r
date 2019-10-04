@@ -107,8 +107,8 @@ setMethod(
   f = "marg",
   signature = "beam.select",
   definition = function(object){
-    if(object@type == 'conditional'){
-      warning('No information about marginal dependence structure available. Check "type" argument in beam call')
+     if(object@type == 'conditional'){
+      warning('marginal dependencies not available in beam object')
       return(data.frame())
     }else{
       sel.idxs <- as.numeric(rownames(object@marginal))

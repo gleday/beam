@@ -4,7 +4,8 @@ test_that("NgreaterthanP", {
 
   ##################################################
   ## beam estimation
-  fit <- beam(X = TCPAprad, type="both", verbose=TRUE)
+  fit <- beam(X = TCPAprad, type="both", verbose=TRUE, D=diag(ncol(TCPAprad)))
+  fit <- beam(X = TCPAprad, type="both", verbose=TRUE, D=NULL)
 
   ## Test beam-class object
   # Test table
@@ -170,6 +171,7 @@ test_that("NlowerthanP", {
 
   ##################################################
   ## beam estimation
+  fit <- beam(X = t(TCPAprad), type="both", verbose=TRUE, D=NULL)
   fit <- beam(X = t(TCPAprad), type="both", verbose=TRUE, D=diag(nrow(TCPAprad)))
 
   ## Test beam-class object
