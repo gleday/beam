@@ -39,46 +39,36 @@ beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(obje
   #              PREPROCESSING              #
   ###########################################
 
-  # Check arguments
-  if(!is.numeric(thres)){
-    stop("thres must be a numeric")
-  }else{
-    if((thres<=0) | (thres>=1)){
-      stop("thres must be greater than 0 and lower than 1")
-    }
-  }
-  if(!is.null(method)){
-    if(is.character(method)){
-      if(!method%in%c("holm", "bonferroni", "BH", "BY", "HC")){
-        stop("method is not recognized")
-      }
-    }else{
-      stop("method must be a character")
-    }
-  }
-
-  if(is.character(return.only)){
-    if(length(return.only)%in%c(1:4)){
-      ind.return.only <- return.only%in%c("cor", "BF", "prob","adj")
-      if(any(!ind.return.only)){
-        stop("return.only contains characters that are not recognized")
-      }
-    }else{
-      stop("return.only must contain at least 1 element and 4 elements at most")
-    }
-  }else{
-    if(!is.null(return.only)){
-      stop("return.only must be a character")
-    }
-  }
-
-  if(any(c("cor", "BF", "prob") %in% setdiff(return.only, object@return.only))){
-    stop("Some of the requested information is not available in the input beam object")
-  }
+  # Check input argument object
+  assert_that(inherits(object, "beam"))
+  
+  # Check input argument thres
+  assert_that(is.numeric(thres))
+  assert_that(not_empty(thres))
+  assert_that(noNA(thres))
+  assert_that(is.finite(thres), msg="thres is not finite")
+  assert_that((thres>0) & (thres<1), msg="thres must be between 0 and 1")
+  
+  # Check input argument method
+  assert_that(is.character(method))
+  assert_that(not_empty(method))
+  assert_that(length(method)==1)
+  assert_that(noNA(method))
+  assert_that(method%in%c("holm", "bonferroni", "BH", "BY", "HC"), msg="method is not recognized")
+  
+  # Check input argument return.only
+  assert_that(is.character(return.only))
+  assert_that(not_empty(return.only))
+  assert_that(noNA(return.only))
+  return.only <- unique(return.only)
+  labs <- c("cor", "BF", "prob", "adj")
+  assert_that(all(return.only%in%labs), msg="return.only is not recognized")
+  ind <- labs %in% setdiff(return.only, object@return.only)
+  assert_that(any(ind), msg=paste0(paste0(labs[which(ind)], collapse=", "), " not available in input beam object"))
 
   # get the data.frame with marginal and/or conditional estimations
   df <- object@table
-  p <- object@dimX[2]  # get number of covariates
+  p <- object@dimX[2]
   df.cols <- colnames(df)
 
   ###########################################
@@ -111,7 +101,7 @@ beam.select <- function(object, thres = 0.1, method = "BH", return.only = c(obje
     }else{
       tableM <- as.data.frame(df[, marg.cols])
     }
-print(class(tableM))
+
     if(!('m_tail_prob' %in% df.cols)){
       stop('Method ', method, ' requires tail probabilities, which are not currently included in the beam object')
     }
@@ -193,7 +183,7 @@ print(class(tableM))
     }
 
   }
-  print(class(tableM))
+
   #########################
   #        OUTPUT         #
   #########################

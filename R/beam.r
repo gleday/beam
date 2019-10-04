@@ -65,66 +65,42 @@ beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), 
 	}
 
 	# Check input argument X
-	#stopifnot(is.matrix(X),  !any(is.na(X)), !any(is.infinite(X)))
-	if(!is.matrix(X)){
-		stop("X is not a matrix")
-	}else{
-		if(any(is.na(X))){
-			stop("X contains missing values")
-		}else{
-		   if(!is.null(colnames(X))){
-		     varlabs <- colnames(X)
-		   }else{
-				 varlabs <- character()
-		   }
-		}
-	}
-	# Check input argument type
-	if(is.character(type)){
-	  if(length(type)==1){
-	    if(!type%in%c("both", "marginal", "conditional")){
-	      stop("type is not recognized")
-	    }
-	  }else{
-	    stop("type must be a character of length equal to 1")
-	  }
-	}else{
-	  stop("type must be a character")
-	}
-	# Check input argument return.only
-	if(is.character(return.only)){
-	  if(length(return.only)%in%c(1:3)){
-      ind.return.only <- return.only%in%c("cor", "BF", "prob")
-	    if(any(!ind.return.only)){
-	      stop("return.only contains characters that are not recognized")
-	    }
-	  }else{
-	    stop("return.only must contain at least 1 element and 3 elements at most")
-	  }
-	}else{
-	  stop("return.only must be a character")
-	}
-	# Check input argument D
-	if(!is.null(D)){
-		if(!is.matrix(D)){
-			stop("D must be a matrix")
-		}else{
-			if(nrow(D)!=ncol(D)){
-				stop("D must be a square matrix")
-			}else{
-				if(!isSymmetric(D)){
-					stop("D must be a symmetric matrix")
-				}else{
-					if(any(is.na(D))){
-						stop("D must not contain missing values")
-					}
-				}
-			}
-		}
-	}else{
-		D <- matrix(0, ncol(X), ncol(X))
-	}
+	assert_that(is.matrix(X))
+	assert_that(not_empty(X))
+	assert_that(noNA(X))
+	assert_that(all(is.finite(X)))
+  if(!is.null(colnames(X))){
+    varlabs <- colnames(X)
+  }else{
+    varlabs <- character()
+  }
 
+  # Check input argument type
+	assert_that(is.character(type))
+	assert_that(not_empty(type))
+	assert_that(length(type)==1)
+	assert_that(noNA(type))
+	assert_that(type%in%c("both", "marginal", "conditional"), msg="type is not recognized")
+	
+	# Check input argument return.only
+	assert_that(is.character(return.only))
+	assert_that(not_empty(return.only))
+	assert_that(noNA(return.only))
+	return.only <- unique(return.only)
+	assert_that(all(return.only%in%c("cor", "BF", "prob")), msg="return.only is not recognized")
+
+	# Check input argument D
+	if(is.null(D)){
+	  D <- matrix(0, ncol(X), ncol(X))
+	}else{
+  	assert_that(is.matrix(D))
+  	assert_that(not_empty(D))
+  	assert_that(nrow(D)==ncol(D), msg="D is not square")
+  	assert_that(isSymmetric(D), msg="D is not symmetric")
+  	assert_that(noNA(D))
+  	assert_that(all(is.finite(D)))
+	}
+	
 	#########################
 	#         BEAM          #
 	#########################
