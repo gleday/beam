@@ -187,7 +187,7 @@ setMethod(
   f = "plotML",
   signature = "beam.select",
   definition = function(object, ...){
-    plot(object@gridAlpha[,2], object@gridAlpha[,3], type="l", xlab=expression(alpha), ylab="log-marginal likelihood")
+    plot(object@gridAlpha[,2], object@gridAlpha[,3], type="l", xlab=expression(alpha), ylab="log-marginal likelihood", lwd=2, ...)
     abline(v=object@alphaOpt, col="black", lty=2)
     abline(h=object@valOpt, col="black", lty=2)
   }
