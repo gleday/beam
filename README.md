@@ -1,6 +1,7 @@
 [![](https://cranlogs.r-pkg.org/badges/beam)](https://cran.r-project.org/package=beam)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/beam)](https://cran.r-project.org/package=beam)
 [![Travis build status](https://travis-ci.org/gleday/beam.svg?branch=master)](https://travis-ci.org/gleday/beam)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/gleday/beam?branch=master&svg=true)](https://ci.appveyor.com/project/gleday/beam)
 [![Coverage status](https://codecov.io/gh/gleday/beam/branch/master/graph/badge.svg)](https://codecov.io/github/gleday/beam?branch=master)
 
 # beam
