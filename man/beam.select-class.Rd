@@ -12,15 +12,7 @@
 \alias{plotML,beam.select-method}
 \alias{bgraph,beam.select-method}
 \alias{ugraph,beam.select-method}
-\alias{marg}
-\alias{cond}
-\alias{mcor}
-\alias{pcor}
 \alias{plotAdj}
-\alias{plotML}
-\alias{bgraph}
-\alias{ugraph}
-
 
 \title{Class beam.select}
 

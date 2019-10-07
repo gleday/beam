@@ -19,6 +19,7 @@
 #' @slot valOpt numeric. Maximum value of the log-marginal likelihood of the Gaussian conjugate model.
 #' @slot return.only character. Input argument.
 #' @slot time numeric. Running time (in seconds).
+#' @slot TinvStdev numeric. Square root of partial variances.
 #'
 #' @method
 #'  \item{print}{Print the object information}
@@ -45,7 +46,8 @@ setClass("beam",
                         gridAlpha = "matrix",
                         valOpt = "numeric",
                         return.only = "character",
-                        time = "numeric")
+                        time = "numeric",
+                        TinvStdev = "numeric")
 )
 
 #' @name beam.select-class

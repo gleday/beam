@@ -105,9 +105,11 @@ beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), 
 	#         BEAM          #
 	#########################
 	
+	# Run beam
 	ind <- c("cor", "BF", "prob") %in% return.only
 	res <- .beam(X=X, type=type, ronly=ind*1, D = D, verbose = verbose)
-	
+
+	# Add column labels
 	labs <- NULL
 	if(type=="marginal" || type=="both"){
 	  labs <- c(labs, paste0("m_", c("cor", "logBF", "tail_prob")[ind]))
@@ -134,7 +136,8 @@ beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), 
 	           "gridAlpha" = res$gridAlpha,
 	           "valOpt" = res$valOpt,
 	           "return.only" = return.only,
-	           "time" = time1[3])
+	           "time" = time1[3],
+	           "TinvStdev" = res$TinvStdev[,1])
 
 	return(out)
 

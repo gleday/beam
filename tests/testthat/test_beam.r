@@ -53,6 +53,9 @@ test_that("NgreaterthanP", {
   # mcor
   expect_equal(dim(pcor(fit)), c(189, 189))
   
+  # postExpOmega
+  expect_equal(dim(postExpOmega(fit)), c(189, 189))
+  
   # bgraph
   expect_equal(class(bgraph(fit)), "igraph")
   

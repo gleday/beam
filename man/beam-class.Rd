@@ -8,11 +8,20 @@
 \alias{cond,beam-method}
 \alias{mcor,beam-method}
 \alias{pcor,beam-method}
+\alias{postExpOmega,beam-method}
 \alias{plotCor,beam-method}
 \alias{plotML,beam-method}
 \alias{bgraph,beam-method}
 \alias{ugraph,beam-method}
+\alias{marg}
+\alias{cond}
+\alias{mcor}
+\alias{pcor}
+\alias{plotML}
+\alias{bgraph}
+\alias{ugraph}
 \alias{plotCor}
+\alias{postExpOmega}
 
 \title{Class beam}
 
@@ -30,6 +39,8 @@
   \S4method{mcor}{beam}(object)
 
   \S4method{pcor}{beam}(object)
+  
+  \S4method{postExpOmega}{beam}(object)
 
   \S4method{plotML}{beam}(object, ...)
 
@@ -80,6 +91,8 @@ An S4 class representing the output of the \code{\link{beam}} function.
   \item{\code{return.only}}{character. Input argument.}
 
   \item{\code{time}}{numeric. Running time (in seconds).}
+  
+  \item{\code{TinvStdev}}{numeric. Square root of partial variances.}
 }
 }
 
