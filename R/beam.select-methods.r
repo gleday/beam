@@ -107,14 +107,15 @@ setMethod(
   f = "marg",
   signature = "beam.select",
   definition = function(object){
-     if(object@type == 'conditional'){
-      warning('marginal dependencies not available in beam object')
-      return(data.frame())
-    }else{
-      sel.idxs <- as.numeric(rownames(object@marginal))
-      rowcol <- .Idx2RowCol(sel.idxs)
-      return(cbind(rowcol, object@marginal))
-    }
+    
+    # Check input
+    assert_that(object@type != 'conditional', msg="no information available in input beam object")
+    
+    # Extract table
+    sel.idxs <- as.numeric(rownames(object@marginal))
+    out <- cbind(.Idx2RowCol(sel.idxs), object@marginal)
+
+    return(out)
 
   }
 )
@@ -126,14 +127,14 @@ setMethod(
   f = "cond",
   signature = "beam.select",
   definition = function(object){
-    if(object@type == 'marginal'){
-      warning('No information about condtional dependence structure available. Check "type" argument in beam call')
-      return(data.frame())
-    }else{
-      sel.idxs <- as.numeric(rownames(object@conditional))
-      rowcol <- .Idx2RowCol(sel.idxs)
-      return(cbind(rowcol, object@conditional))
-    }
+    
+    # Check input
+    assert_that(object@type != 'marginal', msg="no information available in input beam object")
+    
+    sel.idxs <- as.numeric(rownames(object@conditional))
+    out <- cbind(.Idx2RowCol(sel.idxs), object@conditional)
+
+    return(out)
   }
 )
 
@@ -145,17 +146,18 @@ setMethod(
   f = "mcor",
   signature = "beam.select",
   definition = function(object){
-    df <- object@marginal
-    p <- object@dimX[2]
-    idxs <- .Idx2RowCol(as.numeric(rownames(df)))
+    
+    # Check input
+    assert_that(object@type %in% c('marginal', 'both'), msg="information not available in input beam.select object")
 
-    if('m_cor' %in% colnames(df)){
-      matcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs$row,idxs$col), j=c(idxs$col,idxs$row), x=rep(df$m_cor,2), dims=c(p,p)))
-      diag(matcor) <- 1
-      return(matcor)
-    }else{
-      stop('Method not available: either "cor" is not included in return.only or type = "marginal" in calling function beam')
-    }
+    # Extract marginal correlation matrix
+    p <- object@dimX[2]
+    idxs <- .Idx2RowCol(as.numeric(rownames(object@marginal)))
+    matcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs$row,idxs$col), j=c(idxs$col,idxs$row), x=rep(object@marginal$m_cor,2), dims=c(p,p)))
+    diag(matcor) <- 1
+    
+    return(matcor)
+
   }
 )
 
@@ -166,17 +168,17 @@ setMethod(
   f = "pcor",
   signature = "beam.select",
   definition = function(object){
-    df <- object@conditional
+    
+    # Check input
+    assert_that(object@type %in% c('conditional', 'both'), msg="information not available in input beam object")
+    
+    # Extract partial correlation matrix
     p <- object@dimX[2]
     idxs <- .Idx2RowCol(as.numeric(rownames(object@conditional)))
+    matpcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs$row,idxs$col), j=c(idxs$col,idxs$row), x=rep(object@conditional$p_cor,2), dims=c(p, p)))
+    diag(matpcor) <- 1
 
-    if('p_cor' %in% colnames(df)){
-      matcor <- as.matrix(Matrix::sparseMatrix(i=c(idxs$row,idxs$col), j=c(idxs$col,idxs$row), x=rep(df$p_cor,2), dims=c(p,p)))
-      diag(matcor) <- 1
-      return(matcor)
-    }else{
-      stop('Method not available: either "cor" is not included in return.only or type = "marginal" in calling function beam')
-    }
+    return(matpcor)
 
   }
 )
@@ -278,23 +280,20 @@ setMethod(
   f = "bgraph",
   signature = "beam.select",
   definition = function(object){
-    if(object@type %in% c('marginal', 'both')){
-      marg <- object@marginal
-      edges <- .Idx2RowCol(as.numeric(rownames(marg))) # dataframe with all edges
-      colnames(edges) <- c('node1','node2')
-      if(length(object@varlabs)>0){
-        vertices <- data.frame(id = 1:object@dimX[2], label = object@varlabs)
-      }else{
-        vertices <- data.frame(id = 1:object@dimX[2], label = as.character(1:object@dimX[2]))
-      }
-      myigraph <- igraph::graph_from_data_frame(d=edges, vertices=vertices, directed=FALSE)
-      if(length(object@varlabs)>0){
-        myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=object@varlabs)
-      }
-      return(myigraph)
-    }else{
-      stop('Method not available: no information about marginal dependence structure')
-    }
+    
+    # Check input
+    assert_that(object@type %in% c('marginal', 'both'), msg="information not available in input beam.select object")
+    
+    # Get bidirected graph
+    edges <- .Idx2RowCol(as.numeric(rownames(object@marginal)))
+    colnames(edges) <- c('node1','node2')
+    lbl <- ifelse(length(object@varlabs)>0, object@varlabs, as.character(1:object@dimX[2]))
+    vertices <- data.frame(id = 1:object@dimX[2], label = lbl)
+    myigraph <- igraph::graph_from_data_frame(d=edges, vertices=vertices, directed=FALSE)
+    myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=lbl)
+ 
+    return(myigraph)
+
   }
 )
 
@@ -304,22 +303,19 @@ setMethod(
   f = "ugraph",
   signature = "beam.select",
   definition = function(object){
-    if(object@type %in% c('conditional', 'both')){
-      cond <- object@conditional
-      edges <- .Idx2RowCol(as.numeric(rownames(cond)))
-      colnames(edges) <- c('node1','node2')
-      if(length(object@varlabs)>0){
-        vertices <- data.frame(id = 1:object@dimX[2], label = object@varlabs)
-      }else{
-        vertices <- data.frame(id = 1:object@dimX[2], label = as.character(1:object@dimX[2]))
-      }
-      myigraph <- igraph::graph_from_data_frame(d=edges, vertices=vertices, directed=FALSE)
-      if(length(object@varlabs)>0){
-        myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=object@varlabs)
-      }
-      return(myigraph)
-    }else{
-      stop('Method not available: no information about conditional dependence structure')
-    }
+    
+    # Check input
+    assert_that(object@type %in% c('conditional', 'both'), msg="information not available in input beam object")
+    
+    # Get undirected graph
+    edges <- .Idx2RowCol(as.numeric(rownames(object@conditional)))
+    colnames(edges) <- c('node1','node2')
+    lbl <- ifelse(length(object@varlabs)>0, object@varlabs, as.character(1:object@dimX[2]))
+    vertices <- data.frame(id = 1:object@dimX[2], label = lbl)
+    myigraph <- igraph::graph_from_data_frame(d=edges, vertices=vertices, directed=FALSE)
+    myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=lbl)
+    
+    return(myigraph)
+
   }
 )
