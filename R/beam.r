@@ -137,7 +137,8 @@ beam <- function(X, type = "conditional", return.only = c("cor", "BF", "prob"), 
 	           "valOpt" = res$valOpt,
 	           "return.only" = return.only,
 	           "time" = time1[3],
-	           "TinvStdev" = res$TinvStdev[,1])
+	           "TinvStdev" = res$TinvStdev[,1],
+	           "s" = as.vector(res$s))
 
 	return(out)
 

@@ -20,6 +20,7 @@
 #' @slot return.only character. Input argument.
 #' @slot time numeric. Running time (in seconds).
 #' @slot TinvStdev numeric. Square root of partial variances.
+#' @slot s numeric. Sample variances.
 #'
 #' @method
 #'  \item{print}{Print the object information}
@@ -47,7 +48,8 @@ setClass("beam",
                         valOpt = "numeric",
                         return.only = "character",
                         time = "numeric",
-                        TinvStdev = "numeric")
+                        TinvStdev = "numeric",
+                        s = "numeric")
 )
 
 #' @name beam.select-class

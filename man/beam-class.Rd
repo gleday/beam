@@ -93,6 +93,8 @@ An S4 class representing the output of the \code{\link{beam}} function.
   \item{\code{time}}{numeric. Running time (in seconds).}
   
   \item{\code{TinvStdev}}{numeric. Square root of partial variances.}
+  
+  \item{\code{s}}{numeric. Sample variances.}
 }
 }
 

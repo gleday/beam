@@ -190,6 +190,9 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
   // Standardize data
   standardize(&X);
   
+  // Sample variances
+  rowvec s = sum(square(X), 0)/n;
+  
   // Scatter matrix
   arma::mat XTX;
   if(type == "both" || type == "marginal"){
@@ -457,7 +460,8 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
                                       Rcpp::Named("alphaOpt") = alphaOpt,
                                       Rcpp::Named("gridAlpha") = gridAlpha,
                                       Rcpp::Named("valOpt") = valOpt,
-                                      Rcpp::Named("TinvStdev") = sqrt(Tinv.diag()));
+                                      Rcpp::Named("TinvStdev") = sqrt(Tinv.diag()),
+                                      Rcpp::Named("s") = s);
   
   return out;
 }
