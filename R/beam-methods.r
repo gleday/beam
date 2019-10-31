@@ -164,29 +164,58 @@ setMethod(
 )
 
 #' @rdname beam-class
+#' @aliases postExpSigma
+#' @param object An object of class \code{beam-class}
+#' @param vars.method method of shrinkage estimation for variances 
+setMethod(
+  f = "postExpSigma",
+  signature = "beam",
+  definition = function(object, vars.method="eb"){
+    
+    # Check input
+    assert_that('m_cor' %in% colnames(object@table), msg="'m_cor' not available in input beam object")
+    assert_that(is.character(vars.method))
+    assert_that(length(vars.method)==1, msg="vars.method must be of length 1")
+    assert_that(vars.method %in% c("eb", "mean", "median", "none"), msg="unkown vars.method")
+    
+    # Get variance estimates
+    s2 <- .shrinkvars(object@s, object@dimX[1], method=vars.method)
+    
+    # Compute covariance matrix
+    covmat <- tcrossprod(sqrt(s2))
+    covmat <- covmat * mcor(object)
+
+    return(covmat)
+  }
+)
+
+
+#' @rdname beam-class
 #' @aliases postExpOmega
 #' @param object An object of class \code{beam-class}
+#' @param vars.method method of shrinkage estimation for variances 
 setMethod(
   f = "postExpOmega",
   signature = "beam",
-  definition = function(object){
+  definition = function(object, vars.method="eb"){
 
     # Check input
     assert_that('p_cor' %in% colnames(object@table), msg="'p_cor' not available in input beam object")
+    assert_that(is.character(vars.method))
+    assert_that(length(vars.method)==1, msg="vars.method must be of length 1")
+    assert_that(vars.method %in% c("eb", "mean", "median", "none"), msg="unkown vars.method")
+    
+    # Get variance estimates
+    s2 <- .shrinkvars(object@s, object@dimX[1], method=vars.method)
     
     # Function needed
-    pcor2pcov <- function(pcormat, sd){
-      scmat <- sd %*% t(sd)
-      pcormat <- - pcormat
-      diag(pcormat) <- 1
-      Covmat <- scmat * pcormat # element-wise product
-      return(Covmat)
-    }
+    icovmat <- - pcor(object)
+    diag(icovmat) <- 1
+    icovmat <- icovmat * tcrossprod(object@TinvStdev)
+    icovmat <- (object@dimX[1] + object@deltaOpt) * icovmat
+    icovmat <- icovmat * tcrossprod(1/sqrt(s2))
     
-    # Compute posterior expectation
-    eom <- (object@dimX[1] + object@deltaOpt)*pcor2pcov(pcor(object), object@TinvStdev)
-    
-    return(eom)
+    return(icovmat)
   }
 )
 

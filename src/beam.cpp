@@ -187,11 +187,11 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
   const int n = X.n_rows;
   const int p = X.n_cols;
   
-  // Standardize data
-  standardize(&X);
-  
   // Sample variances
   rowvec s = sum(square(X), 0)/n;
+  
+  // Standardize data
+  standardize(&X);
   
   // Scatter matrix
   arma::mat XTX;
