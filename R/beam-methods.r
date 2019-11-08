@@ -176,15 +176,17 @@ setMethod(
     assert_that('m_cor' %in% colnames(object@table), msg="'m_cor' not available in input beam object")
     assert_that(is.character(vars.method))
     assert_that(length(vars.method)==1, msg="vars.method must be of length 1")
-    assert_that(vars.method %in% c("eb", "mean", "median", "none"), msg="unkown vars.method")
+    assert_that(vars.method %in% c("eb", "mean", "median", "none", "scaled"), msg="unkown vars.method")
     
-    # Get variance estimates
-    s2 <- .shrinkvars(object@s, object@dimX[1], method=vars.method)
+    # Posterior expectation
+    covmat <- mcor(object)
     
-    # Compute covariance matrix
-    covmat <- tcrossprod(sqrt(s2))
-    covmat <- covmat * mcor(object)
-
+    # Rescale or not
+    if(vars.method != "scaled"){
+      s2 <- .shrinkvars(object@s, object@dimX[1], method=vars.method)
+      covmat <- covmat * tcrossprod(sqrt(s2))
+    }
+    
     return(covmat)
   }
 )
@@ -203,17 +205,21 @@ setMethod(
     assert_that('p_cor' %in% colnames(object@table), msg="'p_cor' not available in input beam object")
     assert_that(is.character(vars.method))
     assert_that(length(vars.method)==1, msg="vars.method must be of length 1")
-    assert_that(vars.method %in% c("eb", "mean", "median", "none"), msg="unkown vars.method")
+    assert_that(vars.method %in% c("eb", "mean", "median", "none", "scaled"), msg="unkown vars.method")
     
-    # Get variance estimates
-    s2 <- .shrinkvars(object@s, object@dimX[1], method=vars.method)
-    
-    # Function needed
+    # Posterior expectation
     icovmat <- - pcor(object)
     diag(icovmat) <- 1
     icovmat <- icovmat * tcrossprod(object@TinvStdev)
     icovmat <- (object@dimX[1] + object@deltaOpt) * icovmat
-    icovmat <- icovmat * tcrossprod(1/sqrt(s2))
+    
+    # Rescale or not
+    if(vars.method != "scaled"){
+
+      s2 <- .shrinkvars(object@s, object@dimX[1], method=vars.method)
+      icovmat <- icovmat * tcrossprod(1/sqrt(s2))
+      
+    }
     
     return(icovmat)
   }
