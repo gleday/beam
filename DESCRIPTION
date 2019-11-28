@@ -8,7 +8,7 @@ Authors@R: c(person("Gwenael G.R.","Leday", role=c("cre", "aut"), email="gwenael
 Maintainer: Gwenael G.R. Leday <gwenael.leday@mrc-bsu.cam.ac.uk>
 Depends: R (>= 3.1.0)
 Imports: stats, methods, grDevices, graphics, Matrix, fdrtool, igraph, knitr, Rcpp, assertthat
-Description: Fast Bayesian inference of marginal and conditional independence structures between variables from high-dimensional data.
+Description: Fast Bayesian inference of marginal and conditional independence structures from high-dimensional data.
 LazyLoad: yes
 License: GPL (>=2.0)
 LazyData: TRUE
