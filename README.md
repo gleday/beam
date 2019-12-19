@@ -12,7 +12,7 @@ Leday, G.G.R. and Richardson, S. (2019). [Fast Bayesian inference in large Gauss
 
 ## Description
 
-Fast Bayesian inference of marginal and conditional independence structures between variables from high-dimensional data.
+Fast Bayesian inference of marginal and conditional independence structures from high-dimensional data.
 
 ## Installation
 
