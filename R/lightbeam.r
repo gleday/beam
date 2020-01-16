@@ -9,15 +9,15 @@
 #' Fast and memory efficient reconstruction of large conditional independence networks.
 #' 
 #' @details
-#' This function combines \code{\link{beam}} and \code{\link{beam.select}} in a lighter and faster version.
-#' The shrinkage target D is the identity matrix and other choices are not supported yet.
+#' This function is a wrapper for \code{\link{beam}} and \code{\link{beam.select}}. It is faster and outputs a lighter object.
+#' Note that the choice of shrinkage target D is the identity matrix and other choices are not supported yet.
 #'
 #' @return An object of class \code{\link{dgCMatrix-class}}
 #'
 #' @author Gwenael G.R. Leday and Ilaria Speranza
 #'
 #' @references
-#' Leday, G.G.R. and Richardson, S. (2019). Fast Bayesian inference in large Gaussian graphical models. \emph{Biometrics}.
+#' Leday, G.G.R. and Richardson, S. (2019). Fast Bayesian inference in large Gaussian graphical models. \emph{Biometrics}. 75(4), 1288--1298.
 #'
 #' @examples
 #' # Load data

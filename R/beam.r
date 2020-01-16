@@ -25,7 +25,7 @@
 #' @author Gwenael G.R. Leday and Ilaria Speranza
 #'
 #' @references
-#' Leday, G.G.R. and Richardson, S. (2019). Fast Bayesian inference in large Gaussian graphical models. \emph{Biometrics}.
+#' Leday, G.G.R. and Richardson, S. (2019). Fast Bayesian inference in large Gaussian graphical models. \emph{Biometrics}. 75(4), 1288--1298.
 #'
 #' @examples
 #' # Load data
