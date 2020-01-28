@@ -1,7 +1,7 @@
 Package: beam
 Type: Package
 Title: Fast Bayesian Inference in Large Gaussian Graphical Models
-Version: 2.0.0
+Version: 2.0.1
 Date: 2020-01-16
 Author: Gwenael G.R. Leday [cre, aut], Ilaria Speranza [aut], Harry Gray [ctb]
 Authors@R: c(person("Gwenael G.R.","Leday", role=c("cre", "aut"), email="gwenael.leday@mrc-bsu.cam.ac.uk"), person("Ilaria", "Speranza", role = "aut"), person("Harry", "Gray", role = "ctb"))
