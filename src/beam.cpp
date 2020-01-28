@@ -90,8 +90,13 @@ arma::mat get_rzij2(arma::mat* TT, arma::mat* FF){
   arma::mat tiifjj = TT->diag() * FF->diag().t();
   tiifjj += tiifjj.t();
   arma::mat ziizjj = tiitjj/square(den1) + fiifjj/square(den2) - tiifjj/(den1%den2);
+  tiitjj.clear();
+  fiifjj.clear();
+  tiifjj.clear();
+  den1.clear();
+  den2.clear();
   arma::mat rzij2 = zij/sqrt(ziizjj);
-  rzij2 %= rzij2;
+  rzij2 = square(rzij2);
   rzij2 = trimatu(rzij2, 1);
   return(nonzeros(rzij2));
 }
@@ -120,7 +125,7 @@ arma::colvec get2_rzij2(arma::mat* TT, const double d){
   den1.clear();
   rzij2 /= sqrt(ziizjj);
   ziizjj.clear();
-  rzij2 %= rzij2;
+  rzij2 = square(rzij2);
   rzij2 += 2;
   rzij2 = trimatu(rzij2, 1);
   rzij2 = nonzeros(rzij2);
@@ -545,7 +550,7 @@ arma::sp_mat lightbeam(arma::mat X, const double thres, bool verbose = true){
   den1.clear();
   rzij2 /= sqrt(ziizjj);
   ziizjj.clear();
-  rzij2 %= rzij2;
+  rzij2 = square(rzij2);
   
   // Sparsify rzij2
   rzij2.elem(find(rzij2 <= thres)).zeros();
