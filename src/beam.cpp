@@ -41,6 +41,16 @@ void standardize(arma::mat* x){
   x->each_row() %= cs;
 }
 
+void center(arma::mat* x){
+  arma::rowvec cm = mean(*x);
+  x->each_row() -= cm;
+}
+
+void scale(arma::mat* x){
+  rowvec cs = 1/sqrt(sum(square(*x)) / x->n_rows);
+  x->each_row() %= cs;
+}
+
 double alphaToDelta(double alpha, int n, int p){
   return (alpha*n+(1-alpha)*p+(1-alpha))/(1-alpha);
 }
@@ -192,11 +202,14 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
   const int n = X.n_rows;
   const int p = X.n_cols;
   
+  // Center data
+  center(&X);
+  
   // Sample variances
   rowvec s = sum(square(X), 0)/n;
   
-  // Standardize data
-  standardize(&X);
+  // Scale data
+  scale(&X);
   
   // Scatter matrix
   arma::mat XTX;

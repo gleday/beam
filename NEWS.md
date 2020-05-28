@@ -1,5 +1,14 @@
 This file lists changes in the R package for each release.
 
+## beam 2.0.2
+
+* changed contact email address
+* seperate centering and scaling c++ functions to compute sample variances
+
+## beam 2.0.1
+
+* Small bugs fixed in c++ code
+
 ## beam 2.0.0
 
 ### Major changes
@@ -22,6 +31,3 @@ This file lists changes in the R package for each release.
 
 * paper citations have been updated
 
-## beam 2.0.1
-
-* Small bugs fixed in c++ code

@@ -66,7 +66,7 @@
 
   \item{by}{character. When type ="both" and order = 'clust', specifies whether the clustering has to be performed using the complete weighted marginal or conditional independence graph.}
 
-  \item{vars.method}{character. Method of shrinkage estimation for the variances. }
+  \item{vars.method}{character. Method of shrinkage estimation for the variances. Either 'eb', 'mean', 'median' for shrinkage estimation of variance respectively towards an estimated shrinkage target, the mean or the median of the sample variances. Choosing 'none' carries out no shrinkage and uses the sample variances, whereas choosing 'scaled' means that the sample covariance has unit diagonal.}
 
   \item{...}{further arguments passed to or from other methods.}
   
