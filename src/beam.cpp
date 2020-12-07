@@ -111,6 +111,25 @@ arma::mat get_rzij2(arma::mat* TT, arma::mat* FF){
   return(nonzeros(rzij2));
 }
 
+arma::mat get_rzij(arma::mat* TT, arma::mat* FF){
+  arma::mat tiitjj = TT->diag() * TT->diag().t();
+  arma::mat fiifjj = FF->diag() * FF->diag().t();
+  arma::mat den1 = tiitjj - square(*TT);
+  arma::mat den2 = fiifjj - square(*FF);
+  arma::mat zij = - *TT/den1 + *FF/den2;
+  arma::mat tiifjj = TT->diag() * FF->diag().t();
+  tiifjj += tiifjj.t();
+  arma::mat ziizjj = tiitjj/square(den1) + fiifjj/square(den2) - tiifjj/(den1%den2);
+  tiitjj.clear();
+  fiifjj.clear();
+  tiifjj.clear();
+  den1.clear();
+  den2.clear();
+  arma::mat rzij = zij/sqrt(ziizjj);
+  rzij = trimatu(rzij, 1);
+  return(nonzeros(rzij));
+}
+
 arma::colvec get2_rzij2(arma::mat* TT, const double d){
   
   arma::mat den1 = - *TT;
@@ -142,6 +161,37 @@ arma::colvec get2_rzij2(arma::mat* TT, const double d){
   rzij2 -= 2;
   
   return(rzij2);
+}
+arma::colvec get2_rzij(arma::mat* TT, const double d){
+  
+  arma::mat den1 = - *TT;
+  arma::mat rzij = den1;
+  
+  den1 %= *TT;
+  arma::mat ziizjj = TT->diag() * TT->diag().t();
+  den1 += ziizjj;
+  den1 = 1/den1;
+  ziizjj %= den1;
+  ziizjj %= den1;
+  ziizjj += 1/(d*d);
+  arma::mat tiifjj( TT->n_rows , TT->n_cols , fill::zeros);
+  tiifjj.each_col() = TT->diag()*d;
+  tiifjj += tiifjj.t();
+  tiifjj %= den1;
+  tiifjj = tiifjj * (1/(d*d));
+  ziizjj -= tiifjj;
+  tiifjj.clear();
+  
+  rzij %= den1;
+  den1.clear();
+  rzij /= sqrt(ziizjj);
+  ziizjj.clear();
+  rzij += 2;
+  rzij = trimatu(rzij, 1);
+  rzij = nonzeros(rzij);
+  rzij -= 2;
+  
+  return(rzij);
 }
 
 arma::colvec getTails(arma::colvec q, const double s1, const double s2){
@@ -409,7 +459,7 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
   //        CONDITIONAL DEPENDENCIES        //
   //----------------------------------------//
   
-  arma::colvec rgij, rqij;
+  arma::colvec rgij, rqij, rzij;
   
   if(type == "both" || type == "conditional"){
     
@@ -458,9 +508,11 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
       if(isD){
         Dinv = Dinv*d;
         rzij2 = get_rzij2(&Tinv, &Dinv);
+        rzij = get_rzij(&Tinv, &Dinv);
         Dinv = Dinv*(1/d);
       }else{
         rzij2 = get2_rzij2(&Tinv, d);
+        rzij = get2_rzij(&Tinv, d);
       }
       
       results.col(current_free_column) = getTails(rzij2, 0.5, (n-1)*0.5);
@@ -479,7 +531,8 @@ Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, 
                                       Rcpp::Named("gridAlpha") = gridAlpha,
                                       Rcpp::Named("valOpt") = valOpt,
                                       Rcpp::Named("TinvStdev") = sqrt(Tinv.diag()),
-                                      Rcpp::Named("s") = s);
+                                      Rcpp::Named("s") = s,
+                                      Rcpp::Named("rzij") = rzij);
   
   return out;
 }

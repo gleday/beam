@@ -21,6 +21,7 @@
 #' @slot time numeric. Running time (in seconds).
 #' @slot TinvStdev numeric. Square root of partial variances.
 #' @slot s numeric. Sample variances.
+#' @slot rzij numeric. Statistics.
 #'
 #' @method
 #'  \item{print}{Print the object information}
@@ -49,7 +50,8 @@ setClass("beam",
                         return.only = "character",
                         time = "numeric",
                         TinvStdev = "numeric",
-                        s = "numeric")
+                        s = "numeric",
+                        rzij = "numeric")
 )
 
 #' @name beam.select-class

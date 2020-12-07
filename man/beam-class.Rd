@@ -101,6 +101,8 @@ An S4 class representing the output of the \code{\link{beam}} function.
   \item{\code{TinvStdev}}{numeric. Square root of partial variances.}
   
   \item{\code{s}}{numeric. Sample variances.}
+  
+  \item{\code{rzij}}{numeric. Statistics.}
 }
 }
 
