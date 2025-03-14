@@ -1,5 +1,8 @@
 This file lists changes in the R package for each release.
 
+## beam 2.0.3
+ * Pass CRAN checks  
+
 ## beam 2.0.2
 
 * changed contact email address
