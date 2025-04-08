@@ -82,8 +82,8 @@ setClass("beam",
 #'  \item{pcormat}{Return the (possibly sparse) partial correlation matrix.}
 #'  \item{plotML}{Plot the log-marginal likelihood of the Gaussian conjugate model as a function of shrinkage parameter alpha.}
 #'  \item{plotHeatmap}{Plot heatmap of marginal (upper triangle) and/or partial (lower triangle) correlation estimates.}
-#'  \item{bgraph}{Extract the bidirected graph (or marginal inddependence graph) as an igraph object.}
-#'  \item{ugraph}{Extract the bidirected graph (or marginal inddependence graph) as an igraph object.}
+#'  \item{bgraph}{Extract the bidirected graph (or marginal independence graph) as an igraph object.}
+#'  \item{ugraph}{Extract the bidirected graph (or marginal independence graph) as an igraph object.}
 #'
 #' @author Gwenael G.R. Leday and Ilaria Speranza
 #'

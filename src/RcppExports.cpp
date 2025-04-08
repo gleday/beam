@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // beam
 Rcpp::List beam(arma::mat X, std::string type, arma::colvec ronly, arma::mat D, bool verbose);
 RcppExport SEXP _beam_beam(SEXP XSEXP, SEXP typeSEXP, SEXP ronlySEXP, SEXP DSEXP, SEXP verboseSEXP) {

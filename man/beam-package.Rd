@@ -53,7 +53,7 @@ return an \code{igraph} object containing the conditional (in)dependence graph.
 \author{
 Authors: Gwenael G.R. Leday and Ilaria Speranza
 
-Maintainer: Gwenael G.R. Leday <gwenael.leday@mrc-bsu.cam.ac.uk>
+Maintainer: Gwenael G.R. Leday <gwenael.leday@proton.me>
 }
 
 \references{

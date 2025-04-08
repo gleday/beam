@@ -1,7 +1,13 @@
 This file lists changes in the R package for each release.
 
+## beam 2.0.4
+* changed contact email address
+* remove c++14 system requirement in DESCRIPTION
+* correct typos in AllClasses.r
+* removed potential warnings of the optimization in .shrinkvars()
+
 ## beam 2.0.3
- * Pass CRAN checks  
+* pass CRAN checks
 
 ## beam 2.0.2
 

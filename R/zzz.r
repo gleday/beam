@@ -22,13 +22,14 @@
     
     # Functions needed
     logmlyk <- function(p, n, sj){
-      a <- p[1]
-      b <- p[2]
+      a <- pmax(p[1], 1 + .Machine$double.eps)
+      b <- pmax(p[2], 1 + .Machine$double.eps)
       astar <- a+0.5*n
       sum(-0.5*n*log(2*pi) + a*log(a-1) + a*log(b) - lgamma(a) + lgamma(astar) - astar*log((a-1)*b+0.5*n*sj))
     }
     logmlyka <- function(a, b, n, sj){
-      astar <- a+0.5*n
+      a <- pmax(a, 1 + .Machine$double.eps)
+      astar <- a + 0.5*n
       sum(-0.5*n*log(2*pi) + a*log(a-1) + a*log(b) - lgamma(a) + lgamma(astar) - astar*log((a-1)*b+0.5*n*sj))
     }
     atoalpha <- function(a, n){
@@ -40,7 +41,13 @@
     
     # Optimal shrinkage
     if(method=="eb"){
-      resOpt <- optim(c(2,2), logmlyk, n=nk, sj=s2jk, control=list(fnscale=-1))
+      
+      # initial values
+      b0 <- 2
+      a0 <- 2
+      
+      # optimization
+      resOpt <- optim(c(a0,b0), logmlyk, n=nk, sj=s2jk, control=list(fnscale=-1))
       a <- resOpt$par[1]
       b <- resOpt$par[2]
     }
@@ -53,9 +60,11 @@
         b <- median(s2jk)
       }
       
+      # optimization
       lb <- alphatoa(1-0.999, nk)
       ub <- alphatoa(0.999, nk)
-      resOpt <- optim(1, lower=lb , upper=ub, logmlyka, b = b, n = nk, sj = s2jk, method="Brent", control=list(fnscale=-1))
+      a0 <- 2
+      resOpt <- optim(a0, lower=lb , upper=ub, logmlyka, b = b, n = nk, sj = s2jk, method="Brent", control=list(fnscale=-1))
       a <- resOpt$par
       
     }
@@ -64,11 +73,11 @@
     alphaOpt <- atoalpha(a, nk)
     out <- alphaOpt*b + (1-alphaOpt)*s2jk
     
-    print(resOpt)
-    cat("convergence = ", resOpt$convergence, "\n")
-    cat("alphaOpt = ", alphaOpt, "\n")
-    cat("a = ", a, "\n")
-    cat("b = ", b, "\n")
+    #print(resOpt)
+    #cat("convergence = ", resOpt$convergence, "\n")
+    #cat("alphaOpt = ", alphaOpt, "\n")
+    #cat("a = ", a, "\n")
+    #cat("b = ", b, "\n")
     
     
   }else{
