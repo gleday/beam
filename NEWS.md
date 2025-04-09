@@ -2,9 +2,10 @@ This file lists changes in the R package for each release.
 
 ## beam 2.0.4
 * changed contact email address
-* remove c++14 system requirement in DESCRIPTION
-* correct typos in AllClasses.r
-* removed potential warnings of the optimization in .shrinkvars()
+* remove c++14 system requirement in `DESCRIPTION`
+* pass spell checking
+* removed potential warnings of the optimization in `.shrinkvars()`
+* deprecated `igraph::set.vertex.attribute()` replaced by `igraph::set_vertex_attr()`
 
 ## beam 2.0.3
 * pass CRAN checks
@@ -12,7 +13,7 @@ This file lists changes in the R package for each release.
 ## beam 2.0.2
 
 * changed contact email address
-* seperate centering and scaling c++ functions to compute sample variances
+* separate centering and scaling c++ functions to compute sample variances
 
 ## beam 2.0.1
 

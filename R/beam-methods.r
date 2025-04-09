@@ -373,7 +373,7 @@ setMethod(
     colnames(edges) <- c('node1','node2','weight')
     myigraph <- igraph::graph_from_data_frame(d=edges, directed=FALSE)
     if(length(object@varlabs)>0){
-      myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=object@varlabs)
+      myigraph <- igraph::set_vertex_attr(myigraph, "name", value=object@varlabs)
     }
     
     return(myigraph)
@@ -398,7 +398,7 @@ setMethod(
     colnames(edges) <- c('node1','node2','weight')
     myigraph <- igraph::graph_from_data_frame(d=edges, directed=FALSE)
     if(length(object@varlabs)>0){
-      myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=object@varlabs)
+      myigraph <- igraph::set_vertex_attr(myigraph, "name", value=object@varlabs)
     }
     
     return(myigraph)

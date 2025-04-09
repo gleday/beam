@@ -80,9 +80,9 @@ An S4 class representing the output of the \code{\link{beam}} function.
 \describe{
   \item{\code{table}}{dat.frame. A data.frame containing marginal and/or partial correlation estimates, Bayes factors and tail probabilities for each edge.}
 
-  \item{\code{deltaOpt}}{numeric. Empirical Bayes estimate of hyperpaprameter delta.}
+  \item{\code{deltaOpt}}{numeric. Empirical Bayes estimate of hyperparameter delta.}
 
-  \item{\code{alphaOpt}}{numeric. Empirical Bayes estimate of hyperpaprameter alpha.}
+  \item{\code{alphaOpt}}{numeric. Empirical Bayes estimate of hyperparameter alpha.}
 
   \item{\code{dimX}}{numeric. Dimension of the input data matrix X.}
 

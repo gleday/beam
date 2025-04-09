@@ -64,13 +64,13 @@ An S4 class representing the output of the \code{\link{beam.select}} function.
 
   \item{\code{conditional}}{data.frame. A data.frame containing the partial correlation estimates, Bayes factors and tail probabilities for the selected edges only.}
 
-  \item{\code{dimX}}{numeric. Dimension of the imput data matrix X.}
+  \item{\code{dimX}}{numeric. Dimension of the input data matrix X.}
 
   \item{\code{type}}{character. Input type (marginal, conditional or both)}
 
   \item{\code{varlabs}}{character. Column labels of X.}
 
-  \item{\code{alphaOpt}}{numeric. Empirical Bayes estimates of hyperpaprameter alpha.}
+  \item{\code{alphaOpt}}{numeric. Empirical Bayes estimates of hyperparameter alpha.}
 
   \item{\code{gridAlpha}}{matrix. A matrix containing the log-marginal likelihood of the Gaussian conjugate model as a function of a grid of values of alpha and delta.}
 

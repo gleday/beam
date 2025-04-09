@@ -15,7 +15,7 @@ lightbeam(X, thres = 0.1, method = "holm", verbose=TRUE)
 }
 
 \value{
-An object of class \code{\link{dgCMatrix-class}}
+An object of class \code{\link[Matrix:dgCMatrix-class]{dgCMatrix-class}}
 }
 
 \description{

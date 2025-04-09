@@ -290,7 +290,7 @@ setMethod(
     lbl <- ifelse(length(object@varlabs)>0, object@varlabs, as.character(1:object@dimX[2]))
     vertices <- data.frame(id = 1:object@dimX[2], label = lbl)
     myigraph <- igraph::graph_from_data_frame(d=edges, vertices=vertices, directed=FALSE)
-    myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=lbl)
+    myigraph <- igraph::set_vertex_attr(myigraph, "name", value=lbl)
  
     return(myigraph)
 
@@ -313,7 +313,7 @@ setMethod(
     lbl <- ifelse(length(object@varlabs)>0, object@varlabs, as.character(1:object@dimX[2]))
     vertices <- data.frame(id = 1:object@dimX[2], label = lbl)
     myigraph <- igraph::graph_from_data_frame(d=edges, vertices=vertices, directed=FALSE)
-    myigraph <- igraph::set.vertex.attribute(myigraph, "name", value=lbl)
+    myigraph <- igraph::set_vertex_attr(myigraph, "name", value=lbl)
     
     return(myigraph)
 
