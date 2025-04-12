@@ -8,7 +8,9 @@ Authors@R: c(person("Gwenael G.R.","Leday", role=c("cre", "aut"), email="gwenael
 Maintainer: Gwenael G.R. Leday <gwenael.leday@proton.me>
 Depends: R (>= 4.1.0)
 Imports: stats, methods, grDevices, graphics, Matrix, fdrtool, igraph, knitr, Rcpp, assertthat
-Description: Fast Bayesian inference of marginal and conditional independence structures from high-dimensional data. Leday and Richardson (2019), Biometrics, <doi:10.1111/biom.13064>.
+Description: Fast Bayesian inference of marginal and conditional
+    independence structures from high-dimensional data.
+    Leday and Richardson (2019), Biometrics, <doi:10.1111/biom.13064>.
 LazyLoad: yes
 License: GPL (>=2.0)
 LazyData: TRUE
