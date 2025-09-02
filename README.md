@@ -1,7 +1,7 @@
 <!-- header = image + name -->
 <h1 align="center">
   <br>
-  <img src="https://github.com/gleday/gleday/blob/main/images/inferred_graph.png?raw=true" alt="beam" width="200">
+  <img src="https://github.com/gleday/gleday/blob/main/images/inferred_graph.png?raw=true" alt="beam" width="400">
   <br>
   beam
   <br>
