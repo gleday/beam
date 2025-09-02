@@ -1,4 +1,10 @@
 
+<img align="right" src="https://github.com/gleday/gleday/blob/main/images/inferred_graph.png?raw=true" alt="beam image" width="200">
+
+# beam
+
+#### Fast Bayesian inference of network structures.
+
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/beam)](https://CRAN.R-project.org/package=beam)
 [![CRAN checks](https://badges.cranchecks.info/summary/beam.svg)](https://cran.r-project.org/web/checks/check_results_beam.html)
@@ -7,27 +13,19 @@
 [![](http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9)](https://cran.r-project.org/package=beam)
 <!-- badges: end -->
 
-# beam
+## Features
 
-This R package implements the method described in
-
-Leday, G.G.R. and Richardson, S. (2019).
-[Fast Bayesian inference in large Gaussian graphical models](https://doi.org/10.1111/biom.13064).
-*Biometrics.* 75(4), 1288--1298.
-
-## Description
-
-beam:
-
-* enables the reconstruction of marginal and conditional independence
-graphs from high-dimensional data
-* is computationally very efficient, addressing problems with
-thousands of variables in just a few seconds.
+* inference of conditional independence structures
+* inference of marginal independence structures
+* computationally efficient (no MCMC) 
+* memory-efficient
+* able to address problems with thousands of variables on
+a standard laptop in just a few seconds
 * outperforms popular Bayesian and non-Bayesian methods
 
 ## Installation
 
-If you wish to install **beam** from R:
+To install **beam** from R:
 
 ```R
 # Install/load R package devtools
@@ -39,3 +37,10 @@ install_github("gleday/beam")
 library(beam)
 ```
 
+## Citation
+
+This R package implements the method described in
+
+Leday, G.G.R. and Richardson, S. (2019).
+[Fast Bayesian inference in large Gaussian graphical models](https://doi.org/10.1111/biom.13064).
+*Biometrics.* 75(4), 1288--1298.
