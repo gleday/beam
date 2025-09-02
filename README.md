@@ -1,3 +1,4 @@
+<!-- header = image + name -->
 <h1 align="center">
   <br>
   <img src="https://github.com/gleday/gleday/blob/main/images/inferred_graph.png?raw=true" alt="beam" width="200">
@@ -6,17 +7,18 @@
   <br>
 </h1>
 
+<!-- headline -->
 <h4 align="center">Fast Bayesian inference of network structures.</h4>
 
-<p align="center">
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/beam)](https://CRAN.R-project.org/package=beam)
-[![CRAN checks](https://badges.cranchecks.info/summary/beam.svg)](https://cran.r-project.org/web/checks/check_results_beam.html)
-[![Coverage status](https://codecov.io/gh/gleday/beam/branch/master/graph/badge.svg)](https://app.codecov.io/github/gleday/beam?branch=master)
-[![](http://cranlogs.r-pkg.org/badges/grand-total/beam?color=#1F65CC)](https://cran.r-project.org/package=beam)
-[![](http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9)](https://cran.r-project.org/package=beam)
-<!-- badges: end -->
+<p align="center">
+  <a href="https://CRAN.R-project.org/package=beam"><img src="https://www.r-pkg.org/badges/version/beam"></a>
+  <a href="https://cran.r-project.org/web/checks/check_results_beam.html"><img src="https://badges.cranchecks.info/summary/beam.svg"></a>
+  <a href="https://app.codecov.io/github/gleday/beam?branch=master"><img src="https://codecov.io/gh/gleday/beam/branch/master/graph/badge.svg"></a>
+  <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/grand-total/beam?color=#1F65CC"></a>
+  <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9"></a>
 </p>
+<!-- badges: end -->
 
 ## Features
 
