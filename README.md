@@ -1,10 +1,14 @@
+<h1 align="center">
+  <br>
+  <img src="https://github.com/gleday/gleday/blob/main/images/inferred_graph.png?raw=true" alt="beam" width="200">
+  <br>
+  beam
+  <br>
+</h1>
 
-<img align="right" src="https://github.com/gleday/gleday/blob/main/images/inferred_graph.png?raw=true" alt="beam image" width="200">
+<h4 align="center">Fast Bayesian inference of network structures.</h4>
 
-# beam
-
-#### Fast Bayesian inference of network structures.
-
+<p align="center">
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/beam)](https://CRAN.R-project.org/package=beam)
 [![CRAN checks](https://badges.cranchecks.info/summary/beam.svg)](https://cran.r-project.org/web/checks/check_results_beam.html)
@@ -12,6 +16,7 @@
 [![](http://cranlogs.r-pkg.org/badges/grand-total/beam?color=#1F65CC)](https://cran.r-project.org/package=beam)
 [![](http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9)](https://cran.r-project.org/package=beam)
 <!-- badges: end -->
+</p>
 
 ## Features
 
