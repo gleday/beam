@@ -17,8 +17,8 @@
   <a href="https://app.codecov.io/github/gleday/beam?branch=master"><img src="https://codecov.io/gh/gleday/beam/branch/master/graph/badge.svg"></a>
   <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/grand-total/beam?color=#1F65CC"></a>
   <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9"></a>
+  <a href="https://github.com/gleday/beam/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/gleday/beam/actions/workflows/R-CMD-check.yaml/badge.svg"></a>
 </p>
-[![R-CMD-check](https://github.com/gleday/beam/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/gleday/beam/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Features
