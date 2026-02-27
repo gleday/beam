@@ -13,7 +13,7 @@
 <!-- badges: start -->
 <p align="center">
   <a href="https://CRAN.R-project.org/package=beam"><img src="https://www.r-pkg.org/badges/version/beam"></a>
-  <a href="https://cran.r-project.org/web/checks/check_results_beam.html"><img src="https://badges.cranchecks.info/summary/beam.svg"></a>
+  <a href="https://cran.r-project.org/web/checks/check_results_beam.html"><img src="https://badges.cranchecks.info/worst/beam.svg"></a>
   <a href="https://app.codecov.io/github/gleday/beam?branch=master"><img src="https://codecov.io/gh/gleday/beam/branch/master/graph/badge.svg"></a>
   <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/grand-total/beam?color=#1F65CC"></a>
   <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9"></a>
