@@ -18,6 +18,7 @@
   <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/grand-total/beam?color=#1F65CC"></a>
   <a href="https://cran.r-project.org/package=beam"><img src="http://cranlogs.r-pkg.org/badges/last-month/beam?color=#4197D9"></a>
 </p>
+[![R-CMD-check](https://github.com/gleday/beam/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/gleday/beam/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Features
